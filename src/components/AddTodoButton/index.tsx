@@ -3,9 +3,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 import Colors from "../../styles/colors";
 import styles from "./styles";
 
-export default function AddTodoButton() {
+type AddTodoButtonProps = {
+  onPress: () => void;
+};
+
+export default function AddTodoButton(props: AddTodoButtonProps) {
   return (
-    <TouchableOpacity style={styles.buttonContainer}>
+    <TouchableOpacity style={styles.buttonContainer} onPress={props.onPress}>
       <MaterialIcons name="add-circle-outline" color={Colors.white} size={30} />
       <Text style={styles.buttonText}>Add todo</Text>
     </TouchableOpacity>
