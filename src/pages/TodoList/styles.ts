@@ -7,21 +7,6 @@ const styles = StyleSheet.create({
     height: "100%"
   },
 
-  header: {
-    height: 100,
-    paddingTop: 20,
-    paddingHorizontal: 20,
-    backgroundColor: Colors.blue,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-
-  headerTitle: {
-    color: Colors.white,
-    fontSize: 20,
-  },
-
   content: {
     padding: 20,
     flex: 1,
