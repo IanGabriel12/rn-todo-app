@@ -5,6 +5,7 @@ import Colors from "../../styles/colors";
 import { useState } from "react";
 import Checkbox from "../Checkbox";
 import SettingOption from "../SettingOption";
+import AddTodoButton from "../AddTodoButton";
 
 export default function TodoList() {
   const [isSettingsModalVisible, setIsSettingsModalVisible] = useState(false);
@@ -26,6 +27,10 @@ export default function TodoList() {
         <TouchableOpacity onPress={openSettingsModal}>
           <MaterialIcons name="settings" size={30} color={Colors.white} />
         </TouchableOpacity>
+      </View>
+
+      <View style={styles.content}>
+        <AddTodoButton />
       </View>
 
       <Modal visible={isSettingsModalVisible} transparent>

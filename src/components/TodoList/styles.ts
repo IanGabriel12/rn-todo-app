@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 
+  content: {
+    padding: 20,
+  },
+
   modalContainer: {
     flex: 1,
     backgroundColor: Colors.transparentBlack,
