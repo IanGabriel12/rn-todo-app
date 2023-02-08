@@ -3,9 +3,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 import styles from "./styles";
 import Colors from "../../styles/colors";
 import { useState } from "react";
-import Checkbox from "../Checkbox";
-import SettingOption from "../SettingOption";
 import AddTodoButton from "../AddTodoButton";
+import SettingsModal from "../SettingsModal";
 
 export default function TodoList() {
   const [isSettingsModalVisible, setIsSettingsModalVisible] = useState(false);
@@ -14,10 +13,6 @@ export default function TodoList() {
 
   function openSettingsModal() {
     setIsSettingsModalVisible(true);
-  }
-
-  function closeSettingsModal() {
-    setIsSettingsModalVisible(false);
   }
 
   return (
@@ -33,29 +28,14 @@ export default function TodoList() {
         <AddTodoButton />
       </View>
 
-      <Modal visible={isSettingsModalVisible} transparent>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>Settings</Text>
-              <TouchableOpacity onPress={closeSettingsModal}>
-                <MaterialIcons name="close" size={30} color={Colors.red} />
-              </TouchableOpacity>
-            </View>
-
-            <SettingOption
-              checked={showUndoneTasks}
-              setOption={setShowUndoneTasks}
-              name="Show undone tasks"
-            />
-            <SettingOption
-              checked={showDoneTasks}
-              setOption={setShowDoneTasks}
-              name="Show done tasks"
-            />
-          </View>
-        </View>
-      </Modal>
+      <SettingsModal
+        visible={isSettingsModalVisible}
+        setVisible={setIsSettingsModalVisible}
+        showDoneTasks={showDoneTasks}
+        showUndoneTasks={showUndoneTasks}
+        setShowDoneTasks={setShowDoneTasks}
+        setShowUndoneTasks={setShowUndoneTasks}
+      />
     </View>
   );
 }
