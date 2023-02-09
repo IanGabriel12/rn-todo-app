@@ -25,23 +25,21 @@ export default function TodoList({ navigation }: TodoListProps) {
   }
 
   return (
-    <View style={styles.main}>
-      <View style={styles.content}>
-        <AddTodoButton onPress={() => navigation.navigate("NewTodo")} />
-        <FlatList
-          style={styles.todoList}
-          renderItem={({ item, index }) => (
-            <TodoItem
-              onLongPress={() => {}}
-              onPress={() => toggleTodo(todos.length - index - 1)}
-              checked={item.checked}
-              key={item.name}
-              name={item.name}
-            />
-          )}
-          data={todosReverse}
-        />
-      </View>
+    <View style={styles.content}>
+      <AddTodoButton onPress={() => navigation.navigate("NewTodo")} />
+      <FlatList
+        style={styles.todoList}
+        renderItem={({ item, index }) => (
+          <TodoItem
+            onLongPress={() => {}}
+            onPress={() => toggleTodo(todos.length - index - 1)}
+            checked={item.checked}
+            key={item.name}
+            name={item.name}
+          />
+        )}
+        data={todosReverse}
+      />
     </View>
   );
 }
