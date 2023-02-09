@@ -4,17 +4,24 @@ import ReactSetState from "../../types/ReactSetState";
 import SettingOption from "../SettingOption";
 import styles from "./styles";
 import Colors from "../../styles/colors";
+import useSettingsContext from "../../hooks/useSettingsContext";
 
 type SettingsModalProps = {
   visible: boolean;
   setVisible: ReactSetState<boolean>;
-  showUndoneTasks: boolean;
-  setShowUndoneTasks: ReactSetState<boolean>;
-  showDoneTasks: boolean;
-  setShowDoneTasks: ReactSetState<boolean>;
 };
 
 export default function SettingsModal(props: SettingsModalProps) {
+  const { settings, setSettings } = useSettingsContext();
+
+  function toggleUndoneTasks() {
+    setSettings({ ...settings, showUndoneTasks: !settings.showUndoneTasks });
+  }
+
+  function toggleDoneTasks() {
+    setSettings({ ...settings, showDoneTasks: !settings.showDoneTasks });
+  }
+
   return (
     <Modal visible={props.visible} transparent>
       <View style={styles.modalContainer}>
@@ -27,13 +34,13 @@ export default function SettingsModal(props: SettingsModalProps) {
           </View>
 
           <SettingOption
-            checked={props.showUndoneTasks}
-            setOption={props.setShowUndoneTasks}
+            checked={settings.showUndoneTasks}
+            setOption={toggleUndoneTasks}
             name="Show undone tasks"
           />
           <SettingOption
-            checked={props.showDoneTasks}
-            setOption={props.setShowDoneTasks}
+            checked={settings.showDoneTasks}
+            setOption={toggleDoneTasks}
             name="Show done tasks"
           />
         </View>

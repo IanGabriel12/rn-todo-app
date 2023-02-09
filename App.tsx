@@ -2,6 +2,7 @@ import "react-native-gesture-handler";
 import { View, StyleSheet } from "react-native";
 import Router from "./src/router/router";
 import { NavigationContainer } from "@react-navigation/native";
+import { SettingsProvider } from "./src/contexts/SettingsContext";
 
 const styles = StyleSheet.create({
   main: {
@@ -12,10 +13,12 @@ const styles = StyleSheet.create({
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <View style={styles.main}>
-        <Router />
-      </View>
-    </NavigationContainer>
+    <SettingsProvider>
+      <NavigationContainer>
+        <View style={styles.main}>
+          <Router />
+        </View>
+      </NavigationContainer>
+    </SettingsProvider>
   );
 }

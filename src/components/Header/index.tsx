@@ -8,8 +8,6 @@ import { useState } from "react";
 
 export default function Header(props: StackHeaderProps) {
   const [isSettingsModalVisible, setIsSettingsModalVisible] = useState(false);
-  const [showUndoneTasks, setShowUndoneTasks] = useState(true);
-  const [showDoneTasks, setShowDoneTasks] = useState(true);
 
   return (
     <View style={styles.header}>
@@ -21,10 +19,6 @@ export default function Header(props: StackHeaderProps) {
       <SettingsModal
         visible={isSettingsModalVisible}
         setVisible={setIsSettingsModalVisible}
-        showDoneTasks={showDoneTasks}
-        showUndoneTasks={showUndoneTasks}
-        setShowDoneTasks={setShowDoneTasks}
-        setShowUndoneTasks={setShowUndoneTasks}
       />
     </View>
   );
