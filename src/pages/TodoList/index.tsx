@@ -9,7 +9,11 @@ import { StackParamList } from "../../router/router";
 type TodoListProps = StackScreenProps<StackParamList, "TodoList">;
 
 export default function TodoList({ navigation }: TodoListProps) {
-  const [todos, setTodos] = useState<{ name: string; checked: boolean }[]>([]);
+  const [todos, setTodos] = useState<{ name: string; checked: boolean }[]>([
+    { name: "Todo 1", checked: false },
+    { name: "Todo 2", checked: true },
+  ]);
+
   const todosReverse = [...todos].reverse();
 
   function addTodo() {
@@ -24,6 +28,10 @@ export default function TodoList({ navigation }: TodoListProps) {
     setTodos(todosCopy);
   }
 
+  function goToEditTodo(index: number) {
+    navigation.navigate("EditTodo", { todoIndex: index });
+  }
+
   return (
     <View style={styles.content}>
       <AddTodoButton onPress={() => navigation.navigate("NewTodo")} />
@@ -31,7 +39,7 @@ export default function TodoList({ navigation }: TodoListProps) {
         style={styles.todoList}
         renderItem={({ item, index }) => (
           <TodoItem
-            onLongPress={() => {}}
+            onLongPress={() => goToEditTodo(todos.length - index - 1)}
             onPress={() => toggleTodo(todos.length - index - 1)}
             checked={item.checked}
             key={item.name}

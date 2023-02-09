@@ -1,8 +1,9 @@
 import { StackScreenProps } from "@react-navigation/stack";
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput } from "react-native";
+import FormButton from "../../components/FormButton";
 import { StackParamList } from "../../router/router";
 import Colors from "../../styles/colors";
-import styles from "./styles";
+import formStyles from "../../styles/forms";
 
 type NewTodoProps = StackScreenProps<StackParamList, "NewTodo">;
 
@@ -12,15 +13,17 @@ export default function NewTodo({ navigation }: NewTodoProps) {
   }
 
   return (
-    <View style={styles.content}>
-      <Text style={styles.formTitle}>Todo name</Text>
+    <View style={formStyles.content}>
+      <Text style={formStyles.formTitle}>Todo name</Text>
       <TextInput
         autoFocus
-        style={styles.formInput}
+        style={formStyles.formInput}
         placeholder="Task name"
         cursorColor={Colors.blue}
       />
-      <Button color={Colors.blue} title="Create task" onPress={addTodo} />
+      <View style={formStyles.buttonWrapper}>
+        <FormButton color={Colors.blue} title="Create task" onPress={addTodo} />
+      </View>
     </View>
   );
 }
