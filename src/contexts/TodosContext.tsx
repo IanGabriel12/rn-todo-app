@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, PropsWithChildren, useEffect, useState } from "react";
 
 export type Todo = { name: string; checked: boolean };
@@ -19,11 +20,14 @@ export function TodosProvider({ children }: PropsWithChildren) {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
-    //load
+    AsyncStorage.getItem("@todoAppTodos").then((jsonValue) => {
+      if (!jsonValue) return;
+      setTodos(JSON.parse(jsonValue).todos);
+    });
   }, []);
 
   useEffect(() => {
-    //save
+    AsyncStorage.setItem("@todoAppTodos", JSON.stringify({ todos }));
   }, [todos]);
 
   function addTodo(todo: Todo) {

@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext, PropsWithChildren } from "react";
 import ReactSetState from "../types/ReactSetState";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type Settings = {
   showDoneTasks: boolean;
@@ -13,24 +14,27 @@ type SettingsContextType = {
 
 export const settingsContext = createContext<SettingsContextType>({
   settings: {
-    showDoneTasks: false,
-    showUndoneTasks: false,
+    showDoneTasks: true,
+    showUndoneTasks: true,
   },
   setSettings: () => {},
 });
 
 export function SettingsProvider({ children }: PropsWithChildren) {
   const [settings, setSettings] = useState({
-    showDoneTasks: false,
-    showUndoneTasks: false,
+    showDoneTasks: true,
+    showUndoneTasks: true,
   });
 
   useEffect(() => {
-    // load at start
+    AsyncStorage.getItem("@todoAppSettings").then((jsonValue) => {
+      if (!jsonValue) return;
+      setSettings(JSON.parse(jsonValue));
+    });
   }, []);
 
   useEffect(() => {
-    //save
+    AsyncStorage.setItem("@todoAppSettings", JSON.stringify(settings));
   }, [settings]);
 
   return (
