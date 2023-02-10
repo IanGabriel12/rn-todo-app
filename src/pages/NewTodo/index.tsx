@@ -17,7 +17,7 @@ export default function NewTodo({ navigation }: NewTodoProps) {
     if (name === "") {
       ToastAndroid.show("Name is required", ToastAndroid.SHORT);
     } else {
-      addTodo({ name, checked: false });
+      addTodo({ id: Date.now(), name, checked: false });
       navigation.goBack();
     }
   }

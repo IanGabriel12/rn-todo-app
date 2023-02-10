@@ -13,15 +13,18 @@ export default function EditTodo({ navigation, route }: EditTodoProps) {
   const { todos, editTodo, deleteTodo } = useTodosContext();
 
   useEffect(() => {
-    setName(todos[route.params.todoIndex].name);
+    const todo = todos.find((todo) => todo.id === route.params.todoId);
+    if (!todo) return;
+    setName(todo.name);
   }, []);
 
   function handleEdit() {
     if (name == "") {
       ToastAndroid.show("Name is required", ToastAndroid.SHORT);
     } else {
-      const index = route.params.todoIndex;
-      editTodo(index, { ...todos[index], name });
+      const todo = todos.find((todo) => todo.id === route.params.todoId);
+      if (!todo) return;
+      editTodo(route.params.todoId, { ...todo, name });
       navigation.goBack();
     }
   }
@@ -39,7 +42,7 @@ export default function EditTodo({ navigation, route }: EditTodoProps) {
   }
 
   function handleDelete() {
-    deleteTodo(route.params.todoIndex);
+    deleteTodo(route.params.todoId);
     navigation.goBack();
   }
 

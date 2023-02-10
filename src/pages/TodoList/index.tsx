@@ -7,26 +7,24 @@ import TodoItem from "../../components/TodoItem";
 import { StackParamList } from "../../router/router";
 import useTodosContext from "../../hooks/useTodosContext";
 import { Todo } from "../../contexts/TodosContext";
+import useFilteredTodos from "../../hooks/useFilteredTodos";
 
 type TodoListProps = StackScreenProps<StackParamList, "TodoList">;
 
 export default function TodoList({ navigation }: TodoListProps) {
-  const { todos, editTodo } = useTodosContext();
-  const todosReverse = [...todos].reverse();
+  const { editTodo } = useTodosContext();
+  const filteredTodos = useFilteredTodos();
+  const todosReverse = [...filteredTodos].reverse();
 
-  function toggleTodo(reverseIndex: number) {
-    const index = todos.length - reverseIndex - 1;
-    const newTodo: Todo = {
-      ...todos[index],
-      checked: !todos[index].checked,
-    };
-
-    editTodo(index, newTodo);
+  function toggleTodo(todo: Todo) {
+    const newTodo = { ...todo };
+    newTodo.checked = !newTodo.checked;
+    editTodo(newTodo.id, newTodo);
   }
 
-  function goToEditTodo(reverseIndex: number) {
+  function goToEditTodo(id: number) {
     navigation.navigate("EditTodo", {
-      todoIndex: todos.length - reverseIndex - 1,
+      todoId: id,
     });
   }
 
@@ -35,12 +33,12 @@ export default function TodoList({ navigation }: TodoListProps) {
       <AddTodoButton onPress={() => navigation.navigate("NewTodo")} />
       <FlatList
         style={styles.todoList}
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <TodoItem
-            onLongPress={() => goToEditTodo(index)}
-            onPress={() => toggleTodo(index)}
+            onLongPress={() => goToEditTodo(item.id)}
+            onPress={() => toggleTodo(item)}
             checked={item.checked}
-            key={item.name}
+            key={item.id}
             name={item.name}
           />
         )}

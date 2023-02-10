@@ -1,19 +1,19 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, PropsWithChildren, useEffect, useState } from "react";
 
-export type Todo = { name: string; checked: boolean };
+export type Todo = { id: number; name: string; checked: boolean };
 type TodosContext = {
   todos: Todo[];
   addTodo: (todo: Todo) => void;
-  editTodo: (index: number, newTodo: Todo) => void;
-  deleteTodo: (index: number) => void;
+  editTodo: (id: number, newTodo: Todo) => void;
+  deleteTodo: (id: number) => void;
 };
 
 export const todosContext = createContext<TodosContext>({
   todos: [],
   addTodo: (todo: Todo) => {},
-  editTodo: (index: number, newTodo: Todo) => {},
-  deleteTodo: (index: number) => {},
+  editTodo: (id: number, newTodo: Todo) => {},
+  deleteTodo: (id: number) => {},
 });
 
 export function TodosProvider({ children }: PropsWithChildren) {
@@ -36,14 +36,16 @@ export function TodosProvider({ children }: PropsWithChildren) {
     setTodos(todosCopy);
   }
 
-  function editTodo(index: number, newTodo: Todo) {
+  function editTodo(id: number, newTodo: Todo) {
     const todosCopy = [...todos];
+    const index = todosCopy.findIndex((todo) => todo.id === id);
     todosCopy[index] = newTodo;
     setTodos(todosCopy);
   }
 
-  function deleteTodo(index: number) {
+  function deleteTodo(id: number) {
     const todosCopy = [...todos];
+    const index = todosCopy.findIndex((todo) => todo.id === id);
     todosCopy.splice(index, 1);
     setTodos(todosCopy);
   }

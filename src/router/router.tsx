@@ -10,7 +10,7 @@ import EditTodo from "../pages/EditTodo";
 export type StackParamList = {
   TodoList: undefined;
   NewTodo: undefined;
-  EditTodo: { todoIndex: number };
+  EditTodo: { todoId: number };
 };
 
 const Stack = createStackNavigator<StackParamList>();
