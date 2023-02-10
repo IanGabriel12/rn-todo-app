@@ -16,6 +16,10 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 20,
   },
+
+  headerButtons: {
+    flexDirection: "row",
+  }
 });
 
 export default styles;
