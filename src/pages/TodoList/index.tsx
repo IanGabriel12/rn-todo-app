@@ -5,31 +5,29 @@ import { useState } from "react";
 import AddTodoButton from "../../components/AddTodoButton";
 import TodoItem from "../../components/TodoItem";
 import { StackParamList } from "../../router/router";
+import useTodosContext from "../../hooks/useTodosContext";
+import { Todo } from "../../contexts/TodosContext";
 
 type TodoListProps = StackScreenProps<StackParamList, "TodoList">;
 
 export default function TodoList({ navigation }: TodoListProps) {
-  const [todos, setTodos] = useState<{ name: string; checked: boolean }[]>([
-    { name: "Todo 1", checked: false },
-    { name: "Todo 2", checked: true },
-  ]);
-
+  const { todos, editTodo } = useTodosContext();
   const todosReverse = [...todos].reverse();
 
-  function addTodo() {
-    const todosCopy = [...todos];
-    todosCopy.push({ name: "To do " + todosCopy.length, checked: false });
-    setTodos(todosCopy);
+  function toggleTodo(reverseIndex: number) {
+    const index = todos.length - reverseIndex - 1;
+    const newTodo: Todo = {
+      ...todos[index],
+      checked: !todos[index].checked,
+    };
+
+    editTodo(index, newTodo);
   }
 
-  function toggleTodo(index: number) {
-    const todosCopy = [...todos];
-    todosCopy[index].checked = !todosCopy[index].checked;
-    setTodos(todosCopy);
-  }
-
-  function goToEditTodo(index: number) {
-    navigation.navigate("EditTodo", { todoIndex: index });
+  function goToEditTodo(reverseIndex: number) {
+    navigation.navigate("EditTodo", {
+      todoIndex: todos.length - reverseIndex - 1,
+    });
   }
 
   return (
@@ -39,8 +37,8 @@ export default function TodoList({ navigation }: TodoListProps) {
         style={styles.todoList}
         renderItem={({ item, index }) => (
           <TodoItem
-            onLongPress={() => goToEditTodo(todos.length - index - 1)}
-            onPress={() => toggleTodo(todos.length - index - 1)}
+            onLongPress={() => goToEditTodo(index)}
+            onPress={() => toggleTodo(index)}
             checked={item.checked}
             key={item.name}
             name={item.name}
